@@ -1,0 +1,15 @@
+{
+  "name": "naturalis-metadata",
+  "version": "0.1.0",
+  "author": "Atze de Vries",
+  "summary": "Add metadata / global data to the machine using custom facts",
+  "license": "Apache-2.0",
+  "source": "https://github.com/naturalis/puppet-medatata",
+  "project_page": "https://github.com/naturalis/puppet-medatata",
+  "issues_url": "https://github.com/naturalis/puppet-medatata/issues",
+  "dependencies": [
+    {"name":"puppetlabs-stdlib","version_requirement":">= 1.0.0"}
+  ],
+  "data_provider": null
+}
+
