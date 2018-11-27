@@ -1,48 +1,43 @@
 # Class: metadata
 # ===========================
 #
-# Full description of class metadata here.
+# Adding metadata to custom facts 
 #
 # Parameters
 # ----------
 #
-# Document parameters here.
-#
-# * `sample parameter`
-# Explanation of what this parameter affects and what it defaults to.
-# e.g. "Specify one or more upstream ntp servers as an array."
-#
-# Variables
-# ----------
-#
-# Here you should define a list of variables that this module would require.
-#
-# * `sample variable`
-#  Explanation of how this variable affects the function of this class and if
-#  it has a default. e.g. "The parameter enc_ntp_servers must be set by the
-#  External Node Classifier as a comma separated list of hostnames." (Note,
-#  global variables should be avoided in favor of class parameters as
-#  of Puppet 2.6.)
-#
-# Examples
-# --------
-#
-# @example
-#    class { 'metadata':
-#      servers => [ 'pool.ntp.org', 'ntp.local.company.com' ],
-#    }
+# ensure_directories  create directories in which the json file will be set
+# metadata  the data 
 #
 # Authors
 # -------
 #
-# Author Name <author@domain.com>
+# Author Name <hugo.vanduijn@naturalis.nl>
 #
-# Copyright
-# ---------
-#
-# Copyright 2015 Your name here, unless otherwise noted.
-#
-class metadata {
+class metadata (
+  $ensure_directories   = ['/etc/facter','/etc/facter/facts.d'],
+  $metadata = '{
+    "metadata_application":"Generic linux application",
+    "metadata_component":"Webserver",
+    "metadata_description":"No description", 
+    "metadata_status":"Production",
+    "metadata_systemowner":"ICT Infra",
+    "metadata_client":"Naturalis",
+    "metadata_topdesk":"M0000000",
+    "metadata_dnsnames":["www.url.nl","url.nl"]
+  }'
+)
+{
+  file { $ensure_directories:
+    ensure             => directory,
+    mode               => '0755',
+  }
 
+  file { '/etc/facter/facts.d/metadata.json':
+    ensure             => file,
+    mode               => '0644',
+    content            => $metadata,
+    require            => File[$ensure_directories]
+  }
 
 }
